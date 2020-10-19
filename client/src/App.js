@@ -1,13 +1,19 @@
 // React libraries
 import React from 'react';
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 
+// Pages
+import { Login, Signup } from './pages';
 
-import { Navbar } from './components';
-
-function App() {
+const App = () => {
   return (
     <>
-      <Navbar />
+      <Router basename='/'>
+        <Switch>
+          <Route exact path='/login'><Login /></Route>
+          <Route exact path='/signup'><Signup /></Route>
+        </Switch>
+      </Router>
     </>
   );
 }
