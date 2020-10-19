@@ -1,16 +1,16 @@
 // React libraries
 import React from 'react';
-// import logo from '../../public/assets/logo.png';
+import { Link } from "react-router-dom";
 
 // Material UI libraries
-import { AppBar, Toolbar, Typography, Button, IconButton } from '@material-ui/core';
+import { AppBar, Toolbar, Button, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 
 // Custom styles
 import { styles } from "./Navbar.style";
 
 // Navbar component
-const Navbar = () => {
+const Navbar = (props) => {
   const classes = styles();
 
   return (
@@ -23,8 +23,16 @@ const Navbar = () => {
           <img className={classes.logo} src={process.env.PUBLIC_URL + '/assets/logo.png'} alt='logo' />
           <div className={classes.title}></div>
           <div>
-            <Button color="inherit">Login</Button>
-            <Button color="inherit">Signup</Button>
+            {props.isLoggedIn ? <Button color="inherit"><Link className={classes.links} to="/logout">Log Out</Link></Button>
+              : props.login ? <Button color="inherit"><Link className={classes.links} to="/signup">Signup</Link></Button>
+                : props.signup ? <Button color="inherit"><Link className={classes.links} to="/login">Login</Link></Button>
+                  : (
+                    <>
+                      <Button color="inherit"><Link className={classes.links} to="/login">Login</Link></Button>
+                      <Button color="inherit"><Link className={classes.links} to="/signup">Signup</Link></Button>
+                    </>
+                  )
+            }
           </div>
         </Toolbar>
       </AppBar>
