@@ -1,6 +1,6 @@
 // React libraries
 import React from 'react';
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 
 // Pages
 import { Login, Signup } from './pages';

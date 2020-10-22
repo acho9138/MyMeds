@@ -1,8 +1,8 @@
 // React library
-import React, { useState } from 'react';
+import React from 'react';
 
 // Material UI libraries
-import { Paper, Typography, Container, Grid, TextField, FormControl, Button } from '@material-ui/core';
+import { Paper, Typography, Container } from '@material-ui/core';
 
 // Components
 import { Navbar } from '../../components';
@@ -11,7 +11,7 @@ import { Navbar } from '../../components';
 import { styles } from './Home.style';
 
 // utils
-import API from '../../utils/API';
+// import API from '../../utils/API';
 
 const Home = () => {
   const classes = styles();
@@ -19,9 +19,9 @@ const Home = () => {
   return (
     <>
       <Navbar isLoggedIn={true} />
-      <Container maxWidth="sm" className={classes.container}>
+      <Container maxWidth='sm' className={classes.container}>
         <Paper elevation={3} className={classes.paper}>
-          <Typography variant="h1" gutterBottom>
+          <Typography variant='h1' gutterBottom>
             Hello
           </Typography>
         </Paper>
