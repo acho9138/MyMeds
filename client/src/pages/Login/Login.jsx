@@ -21,7 +21,8 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     API.login({
       email: email,
       password: password,
@@ -49,8 +50,6 @@ const Login = () => {
                     <Grid item><EmailIcon /></Grid>
                     <Grid item>
                       <TextField
-                        id="input-with-icon-grid"
-                        fullWidth
                         className={classes.inputField}
                         label="Email"
                         value={email}
@@ -64,8 +63,8 @@ const Login = () => {
                     <Grid item><LockIcon /></Grid>
                     <Grid item>
                       <TextField
-                        id="input-with-icon-grid"
                         className={classes.inputField}
+                        type="password"
                         label="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}

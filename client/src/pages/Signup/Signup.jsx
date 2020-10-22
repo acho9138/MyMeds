@@ -36,7 +36,6 @@ const Signup = (props) => {
                     <Grid item><EmailIcon /></Grid>
                     <Grid item>
                       <TextField
-                        id="input-with-icon-grid"
                         className={classes.inputField}
                         label="Email"
                       />
@@ -48,8 +47,8 @@ const Signup = (props) => {
                     <Grid item><LockIcon /></Grid>
                     <Grid item>
                       <TextField
-                        id="input-with-icon-grid"
                         label="Password"
+                        type="password"
                         className={classes.inputField}
                       />
                     </Grid>
