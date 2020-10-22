@@ -18,5 +18,13 @@ export const styles = makeStyles((theme) => ({
   title: {
     textAlign: 'center',
     marginTop: '30px'
+  },
+  inputField: {
+    width: '15em',
+  },
+  form: {
+    display: 'flex',
+    alignItems: 'center',
+    paddingBottom: '30px'
   }
 }));

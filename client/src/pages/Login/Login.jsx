@@ -1,5 +1,5 @@
 // React library
-import React from 'react';
+import React, { useState } from 'react';
 
 // Material UI libraries
 import { Paper, Typography, Container, Grid, TextField, FormControl, Button } from '@material-ui/core';
@@ -7,13 +7,26 @@ import EmailIcon from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
 
 // Components
-import { Navbar } from '../../components'
+import { Navbar } from '../../components';
 
 // Custom styles
-import { styles } from './Login.style'
+import { styles } from './Login.style';
+
+// utils
+import API from '../../utils/API';
 
 const Login = () => {
   const classes = styles();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = () => {
+    API.login({
+      email: email,
+      password: password,
+    })
+  };
 
   return (
     <>
@@ -30,12 +43,19 @@ const Login = () => {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <FormControl className={classes.margin}>
+              <FormControl className={classes.form}>
                 <div className={classes.margin}>
                   <Grid container spacing={1} alignItems="flex-end">
                     <Grid item><EmailIcon /></Grid>
                     <Grid item>
-                      <TextField id="input-with-icon-grid" fullWidth label="Email" />
+                      <TextField
+                        id="input-with-icon-grid"
+                        fullWidth
+                        className={classes.inputField}
+                        label="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
                     </Grid>
                   </Grid>
                 </div>
@@ -43,21 +63,24 @@ const Login = () => {
                   <Grid container spacing={1} alignItems="flex-end">
                     <Grid item><LockIcon /></Grid>
                     <Grid item>
-                      <TextField id="input-with-icon-grid" fullWidth label="Password" />
+                      <TextField
+                        id="input-with-icon-grid"
+                        className={classes.inputField}
+                        label="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
                     </Grid>
                   </Grid>
                 </div>
-                <Button variant="contained" color="primary">
+                <Button onClick={handleSubmit} variant="contained" color="primary">
                   Login
                 </Button>
               </FormControl>
             </Grid>
           </Grid>
-          {/* 
-           */}
         </Paper>
       </Container>
-
     </>
   )
 }

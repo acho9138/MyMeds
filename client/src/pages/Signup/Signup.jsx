@@ -12,7 +12,7 @@ import { Navbar } from '../../components'
 // Custom styles
 import { styles } from './Signup.style'
 
-const Login = () => {
+const Signup = (props) => {
   const classes = styles();
 
   return (
@@ -30,12 +30,16 @@ const Login = () => {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <FormControl className={classes.margin}>
+              <FormControl className={classes.form}>
                 <div className={classes.margin}>
                   <Grid container spacing={1} alignItems="flex-end">
                     <Grid item><EmailIcon /></Grid>
                     <Grid item>
-                      <TextField id="input-with-icon-grid" fullWidth label="Email" />
+                      <TextField
+                        id="input-with-icon-grid"
+                        className={classes.inputField}
+                        label="Email"
+                      />
                     </Grid>
                   </Grid>
                 </div>
@@ -43,18 +47,20 @@ const Login = () => {
                   <Grid container spacing={1} alignItems="flex-end">
                     <Grid item><LockIcon /></Grid>
                     <Grid item>
-                      <TextField id="input-with-icon-grid" fullWidth label="Password" />
+                      <TextField
+                        id="input-with-icon-grid"
+                        label="Password"
+                        className={classes.inputField}
+                      />
                     </Grid>
                   </Grid>
                 </div>
-                <Button variant="contained" color="primary">
+                <Button onClick={props.handleSubmit} variant="contained" color="primary">
                   Signup
                 </Button>
               </FormControl>
             </Grid>
           </Grid>
-          {/* 
-           */}
         </Paper>
       </Container>
 
@@ -62,4 +68,4 @@ const Login = () => {
   )
 }
 
-export default Login;
+export default Signup;
