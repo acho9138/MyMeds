@@ -24,34 +24,38 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     API.login({
-      email: email,
+      username: email,
       password: password,
+    }).then((result) => {
+      console.log(result);
+    }).catch((error) => {
+      console.error(error);
     })
   };
 
   return (
     <>
       <Navbar isLoggedIn={false} login={true} />
-      <Container maxWidth="sm" className={classes.container}>
+      <Container maxWidth='sm' className={classes.container}>
         <Paper elevation={3} className={classes.paper}>
           <Grid container spacing={3}>
             <Grid item xs={12} className={classes.title}>
-              <Typography variant="h4" gutterBottom>
+              <Typography variant='h4' gutterBottom>
                 Welcome Back
               </Typography>
-              <Typography variant="h6">
+              <Typography variant='h6'>
                 Let's Login
               </Typography>
             </Grid>
             <Grid item xs={12}>
               <FormControl className={classes.form}>
                 <div className={classes.margin}>
-                  <Grid container spacing={1} alignItems="flex-end">
+                  <Grid container spacing={1} alignItems='flex-end'>
                     <Grid item><EmailIcon /></Grid>
                     <Grid item>
                       <TextField
                         className={classes.inputField}
-                        label="Email"
+                        label='Email'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                       />
@@ -59,20 +63,20 @@ const Login = () => {
                   </Grid>
                 </div>
                 <div className={classes.margin}>
-                  <Grid container spacing={1} alignItems="flex-end">
+                  <Grid container spacing={1} alignItems='flex-end'>
                     <Grid item><LockIcon /></Grid>
                     <Grid item>
                       <TextField
                         className={classes.inputField}
-                        type="password"
-                        label="Password"
+                        type='password'
+                        label='Password'
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                       />
                     </Grid>
                   </Grid>
                 </div>
-                <Button onClick={handleSubmit} variant="contained" color="primary">
+                <Button onClick={handleSubmit} variant='contained' color='primary'>
                   Login
                 </Button>
               </FormControl>
