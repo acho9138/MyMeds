@@ -1,5 +1,6 @@
 // React library
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 // Material UI libraries
 import { Paper, Typography, Container, Grid, TextField, FormControl, Button } from '@material-ui/core';
@@ -17,17 +18,19 @@ import API from '../../utils/API';
 
 const Login = () => {
   const classes = styles();
+  const history = useHistory();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
     API.login({
       username: email,
       password: password,
-    }).then((result) => {
-      console.log(result);
+    }).then((res) => {
+      history.push('/home');
+      console.log('Successfully logged in');
     }).catch((error) => {
       console.error(error);
     })
