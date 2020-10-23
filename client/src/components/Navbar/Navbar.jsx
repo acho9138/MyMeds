@@ -23,7 +23,7 @@ const Navbar = (props) => {
           <img className={classes.logo} src={process.env.PUBLIC_URL + '/assets/logo.png'} alt='logo' />
           <div className={classes.title}></div>
           <div>
-            {props.isLoggedIn ? <Button color='inherit'><Link className={classes.links} to='/logout'>Log Out</Link></Button>
+            {props.isLoggedIn ? <Button color='inherit'><Link className={classes.links} to='/logout'>Logout</Link></Button>
               : props.login ? <Button color='inherit'><Link className={classes.links} to='/signup'>Signup</Link></Button>
                 : props.signup ? <Button color='inherit'><Link className={classes.links} to='/login'>Login</Link></Button>
                   : (
