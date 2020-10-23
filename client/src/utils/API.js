@@ -8,5 +8,8 @@ export default {
   // Makes new user
   signup: function (user) {
     return axios.post('/api/user/signup', user);
+  },
+  logout: function () {
+    return axios.get('/api/user/logout');
   }
 };
