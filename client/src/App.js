@@ -3,7 +3,7 @@ import React from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 
 // Pages
-import { Login, Signup } from './pages';
+import { Login, Signup, Home } from './pages';
 
 const App = () => {
   return (
@@ -12,6 +12,7 @@ const App = () => {
         <Switch>
           <Route exact path='/login'><Login /></Route>
           <Route exact path='/signup'><Signup /></Route>
+          <Route exact path='/home'><Home /></Route>
         </Switch>
       </Router>
     </>
