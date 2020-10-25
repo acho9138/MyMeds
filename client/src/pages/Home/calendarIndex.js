@@ -57,7 +57,6 @@ class SchedulerComponent extends Component {
   }
 
   render() {
-    console.log(this.state.viewModel)
     return (
       <Scheduler
         schedulerData={this.state.viewModel}
