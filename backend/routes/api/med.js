@@ -13,4 +13,7 @@ router.route('/:id')
 router.route('/:id')
   .delete(medsController.delete);
 
+router.route('/:userId')
+  .get(medsController.get);
+
 module.exports = router;
