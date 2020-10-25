@@ -11,5 +11,17 @@ export default {
   },
   logout: function () {
     return axios.get('/api/user/logout');
+  },
+  getMeds: function (userId) {
+    return axios.get('/api/med/' + userId);
+  },
+  addMed: function (med) {
+    return axios.post('/api/med', med);
+  },
+  editMed: function (medId) {
+    return axios.put(`/api/med/${medId}`);
+  },
+  deleteMed: function (medId) {
+    return axios.delete(`/api/med/${medId}`);
   }
 };
