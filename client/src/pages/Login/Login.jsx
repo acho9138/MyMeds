@@ -10,9 +10,6 @@ import LockIcon from '@material-ui/icons/Lock';
 // Custom styles
 import { styles } from './Login.style';
 
-// Components
-import { Navbar } from '../../components';
-
 // utils
 import API from '../../utils/API';
 
@@ -40,7 +37,6 @@ const Login = ({ setIsLoggedIn }) => {
 
   return (
     <>
-      <Navbar isLoggedIn={false} login={true} />
       <Container maxWidth='sm' className={classes.container}>
         <Paper elevation={3} className={classes.paper}>
           <Grid container spacing={3}>
