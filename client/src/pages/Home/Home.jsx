@@ -24,7 +24,7 @@ const Home = (props) => {
   return (
     <>
       <Container maxWidth='sm' className={classes.container}>
-        <Paper elevation={3} className={classes.paper}>
+        <Paper elevation={0} className={classes.paper}>
           <Typography variant='h3' gutterBottom>
             My Schedule
           </Typography>

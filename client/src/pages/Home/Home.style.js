@@ -13,5 +13,9 @@ export const styles = makeStyles((theme) => ({
     position: 'fixed',
     zIndex: 100
   },
+  paper: {
+    textAlign: 'center',
+    marginBottom: '50px',
+  }
 })
 )
