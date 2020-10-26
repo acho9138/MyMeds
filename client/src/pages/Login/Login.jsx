@@ -7,16 +7,16 @@ import { Paper, Typography, Container, Grid, TextField, FormControl, Button } fr
 import EmailIcon from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
 
-// Components
-import { Navbar } from '../../components';
-
 // Custom styles
 import { styles } from './Login.style';
+
+// Components
+import { Navbar } from '../../components';
 
 // utils
 import API from '../../utils/API';
 
-const Login = () => {
+const Login = ({ setIsLoggedIn }) => {
   const classes = styles();
   const history = useHistory();
 
@@ -29,7 +29,9 @@ const Login = () => {
       username: email,
       password: password,
     }).then((res) => {
+      setIsLoggedIn(true)
       history.push('/home');
+      localStorage.setItem('userId', res.data.userId);
       console.log('Successfully logged in');
     }).catch((error) => {
       console.error(error);
