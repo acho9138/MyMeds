@@ -65,7 +65,10 @@ const MedForm = (props) => {
       time: selectedTime,
       startDate: selectedStartDate,
       endDate: selectedEndDate
-    }).then(() => console.log('Successfully added new medication')
+    }).then(() => {
+      console.log('Successfully added new medication');
+      window.location.reload();
+    }
     ).catch((error) => {
       console.error(error);
     })
