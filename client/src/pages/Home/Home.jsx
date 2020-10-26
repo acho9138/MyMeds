@@ -30,7 +30,9 @@ const Home = (props) => {
           </Typography>
         </Paper>
       </Container>
-      <Calendar />
+      <Paper elevation={3}>
+        <Calendar />
+      </Paper>
       <Fab className={classes.button} onClick={() => setOpen(true)} color='primary' aria-label='add'>
         <AddIcon />
       </Fab>
