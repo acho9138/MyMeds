@@ -40,7 +40,7 @@ class Calendar extends Component {
 
   getEvents(data) {
     let events = []
-    const colors = ['#7fc5f6', '#f759ab', '#51adcf', '#B56AD7', '#7579e7', '#93b5e1', '#f6acc8'];
+    const colors = ['#7fc5f6', '#f759ab', '#93b5e1', '#B56AD7', '#7579e7', '#51adcf', '#f6acc8'];
 
     for (let i = 0; i < data.length; i++) {
       const med = data[i];
@@ -141,6 +141,14 @@ class Calendar extends Component {
     alert(`You just clicked an event: {id: ${event.id}, title: ${event.title}}`);
   }
 
+  ops1 = (schedulerData, event) => {
+    console.log(event);
+  };
+
+  ops2 = (schedulerData, event) => {
+    console.log(event);
+  };
+
   render() {
     return (
       <Scheduler
@@ -150,6 +158,10 @@ class Calendar extends Component {
         onSelectDate={this.onSelectDate}
         onViewChange={this.onViewChange}
         eventItemClick={this.eventClicked}
+        viewEventClick={this.ops1}
+        viewEventText="EDIT"
+        viewEvent2Text="DELETE"
+        viewEvent2Click={this.ops2}
       />
     )
   }
