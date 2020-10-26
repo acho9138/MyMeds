@@ -68,8 +68,7 @@ const MedForm = (props) => {
     }).then(() => {
       console.log('Successfully added new medication');
       window.location.reload();
-    }
-    ).catch((error) => {
+    }).catch((error) => {
       console.error(error);
     })
   }
