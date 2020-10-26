@@ -6,9 +6,6 @@ import { Paper, Typography, Container, Grid, TextField, FormControl, Button } fr
 import EmailIcon from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
 
-// Components
-import { Navbar } from '../../components'
-
 // Custom styles
 import { styles } from './Signup.style'
 
@@ -17,7 +14,6 @@ const Signup = (props) => {
 
   return (
     <>
-      <Navbar isLoggedIn={false} signup={true} />
       <Container maxWidth='sm' className={classes.container}>
         <Paper elevation={3} className={classes.paper}>
           <Grid container spacing={3}>
