@@ -12,6 +12,7 @@ module.exports = {
       res.json({
         success: true,
         status: 'You are successfully logged in!',
+        userId: person.id,
       });
     })
   },
