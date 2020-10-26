@@ -51,7 +51,7 @@ class Calendar extends Component {
 
       if (med.frequency === '1xdaily') {
         events.push({
-          id: i + 1,
+          id: med._id,
           start: moment(med.startDate).format('YYYY-MM-DD hh:mm:ss'),
           end: moment(med.startDate).add(5, 'minutes').format('YYYY-MM-DD hh:mm:ss'),
           resourceId: med.name,
@@ -62,7 +62,7 @@ class Calendar extends Component {
         })
       } else if (med.frequency === '1xmonthly') {
         events.push({
-          id: i + 1,
+          id: med._id,
           start: moment(med.startDate).format('YYYY-MM-DD hh:mm:ss'),
           end: moment(med.startDate).add(5, 'minutes').format('YYYY-MM-DD hh:mm:ss'),
           resourceId: med.name,
@@ -73,7 +73,7 @@ class Calendar extends Component {
         })
       } else if (med.frequency === '1xweekly') {
         events.push({
-          id: i + 1,
+          id: med._id,
           start: moment(med.startDate).format('YYYY-MM-DD hh:mm:ss'),
           end: moment(med.startDate).add(5, 'minutes').format('YYYY-MM-DD hh:mm:ss'),
           resourceId: med.name,
@@ -141,12 +141,17 @@ class Calendar extends Component {
     alert(`You just clicked an event: {id: ${event.id}, title: ${event.title}}`);
   }
 
-  ops1 = (schedulerData, event) => {
-    console.log(event);
+  edit = (schedulerData, event) => {
+    // console.log(event.id);
   };
 
-  ops2 = (schedulerData, event) => {
-    console.log(event);
+  delete = (schedulerData, event) => {
+    const id = event.id;
+
+    API.deleteMed(id.toString().slice(0, -2))
+      .then(() => {
+        window.location.reload();
+      })
   };
 
   render() {
@@ -158,10 +163,10 @@ class Calendar extends Component {
         onSelectDate={this.onSelectDate}
         onViewChange={this.onViewChange}
         eventItemClick={this.eventClicked}
-        viewEventClick={this.ops1}
+        viewEventClick={this.edit}
         viewEventText="EDIT"
         viewEvent2Text="DELETE"
-        viewEvent2Click={this.ops2}
+        viewEvent2Click={this.delete}
       />
     )
   }
