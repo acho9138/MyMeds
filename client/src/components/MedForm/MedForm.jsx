@@ -20,27 +20,15 @@ import API from '../../utils/API';
 
 const frequencies = [
   {
-    value: '1xdaily',
+    value: 'ONCE daily',
     label: 'ONCE daily',
   },
   {
-    value: '2xdaily',
-    label: 'TWICE daily',
-  },
-  {
-    value: '3xdaily',
-    label: 'THREE times daily',
-  },
-  {
-    value: '4xdaily',
-    label: 'FOUR times daily',
-  },
-  {
-    value: '1xweekly',
+    value: 'ONCE a WEEK',
     label: 'ONCE a WEEK',
   },
   {
-    value: '1xmonthly',
+    value: 'ONCE a MONTH',
     label: 'ONCE a MONTH',
   },
 ];
@@ -145,7 +133,7 @@ const MedForm = (props) => {
                   format='dd/MM/yyyy'
                   margin='normal'
                   label='Start date'
-                  value={props.selectedStartDate}
+                  value={selectedStartDate}
                   onChange={(date) => setselectedStartDate(date)}
                   KeyboardButtonProps={{
                     'aria-label': 'change date',
@@ -157,7 +145,7 @@ const MedForm = (props) => {
                   format='dd/MM/yyyy'
                   margin='normal'
                   label='End date (OPTIONAL)'
-                  value={props.selectedEndDate}
+                  value={selectedEndDate}
                   onChange={(date) => setSelectedEndDate(date)}
                   KeyboardButtonProps={{
                     'aria-label': 'change date',
