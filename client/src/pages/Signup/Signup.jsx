@@ -1,5 +1,6 @@
 // React library
-import React from 'react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 // Material UI libraries
 import { Paper, Typography, Container, Grid, TextField, FormControl, Button } from '@material-ui/core';
@@ -9,8 +10,30 @@ import LockIcon from '@material-ui/icons/Lock';
 // Custom styles
 import { styles } from './Signup.style'
 
-const Signup = (props) => {
+// utils
+import API from '../../utils/API';
+
+const Signup = ({ setIsLoggedIn }) => {
   const classes = styles();
+  const history = useHistory();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    API.signup({
+      username: email,
+      password: password,
+    }).then((res) => {
+      setIsLoggedIn(true)
+      history.push('/home');
+      localStorage.setItem('userId', res.data.userId);
+      console.log('Successfully signed up');
+    }).catch((error) => {
+      console.error(error);
+    })
+  };
 
   return (
     <>
@@ -34,6 +57,8 @@ const Signup = (props) => {
                       <TextField
                         className={classes.inputField}
                         label='Email'
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                       />
                     </Grid>
                   </Grid>
@@ -46,11 +71,13 @@ const Signup = (props) => {
                         label='Password'
                         type='password'
                         className={classes.inputField}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                       />
                     </Grid>
                   </Grid>
                 </div>
-                <Button onClick={props.handleSubmit} variant='contained' color='primary'>
+                <Button onClick={handleSubmit} variant='contained' color='primary'>
                   Signup
                 </Button>
               </FormControl>
