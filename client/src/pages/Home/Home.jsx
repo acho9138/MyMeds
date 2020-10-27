@@ -14,12 +14,39 @@ import { styles } from './Home.style';
 // Calendar API
 import { Calendar } from './_components'
 
+// utils
+import API from '../../utils/API';
+
 
 // Home component
 const Home = (props) => {
   const classes = styles();
 
   const [open, setOpen] = useState(false);
+  const [name, setName] = useState('');
+  const [strength, setStrength] = useState('');
+  const [frequency, setFrequency] = useState('');
+  const [selectedTime, setSelectedTime] = useState(new Date());
+  const [selectedStartDate, setSelectedStartDate] = useState(new Date());
+  const [selectedEndDate, setSelectedEndDate] = useState(null);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    API.addMed({
+      userId: localStorage.getItem('userId'),
+      name: name,
+      strength: strength,
+      frequency: frequency,
+      time: selectedTime,
+      startDate: selectedStartDate,
+      endDate: selectedEndDate
+    }).then(() => {
+      console.log('Successfully added new medication');
+      window.location.reload();
+    }).catch((error) => {
+      console.error(error);
+    })
+  }
 
   return (
     <>
@@ -42,6 +69,19 @@ const Home = (props) => {
         in={open}
         action={'Add'}
         title={'Add a Medication'}
+        onClick={handleSubmit}
+        onChangeName={(e) => setName(e.target.value)}
+        onChangeStrength={(e) => setStrength(e.target.value)}
+        onChangeFrequency={(event) => setFrequency(event.target.value)}
+        onChangeTime={(time) => setSelectedTime(time)}
+        onChangeStartDate={(date) => setSelectedStartDate(date)}
+        onChangeEndDate={(date) => setSelectedEndDate(date)}
+        name={name}
+        strength={strength}
+        frequency={frequency}
+        time={selectedTime}
+        startDate={selectedStartDate}
+        endDate={selectedEndDate}
       />
     </>
   )
