@@ -8,7 +8,7 @@ export const styles = makeStyles((theme) => ({
     margin: 0,
     top: 'auto',
     right: 20,
-    bottom: 20,
+    bottom: 120,
     left: 'auto',
     position: 'fixed',
     zIndex: 100
