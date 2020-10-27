@@ -18,8 +18,8 @@ export default {
   addMed: (med) => {
     return axios.post('/api/med', med);
   },
-  editMed: (medId, res) => {
-    return axios.put(`/api/med/${medId}`, res);
+  editMed: (medId, data) => {
+    return axios.put(`/api/med/${medId}`, data);
   },
   deleteMed: (medId) => {
     return axios.delete(`/api/med/${medId}`);
