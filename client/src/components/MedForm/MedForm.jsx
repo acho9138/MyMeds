@@ -89,22 +89,22 @@ const MedForm = (props) => {
       <Fade in={props.in}>
         <div className={classes.paper}>
           <Typography variant='h5' gutterBottom>
-            Add a Medication
-            </Typography>
+            {props.title}
+          </Typography>
           <FormControl className={classes.root}>
             <div>
               <TextField
                 label='Medication name'
                 variant='outlined'
                 size='small'
-                value={name}
+                value={props.name}
                 onChange={(e) => setName(e.target.value)}
               />
               <TextField
                 label='Strength'
                 variant='outlined'
                 size='small'
-                value={strength}
+                value={props.strength}
                 onChange={(e) => setStrength(e.target.value)}
               />
             </div>
@@ -112,7 +112,7 @@ const MedForm = (props) => {
               <TextField
                 select
                 label='Select frequency'
-                value={frequency}
+                value={props.frequency}
                 onChange={(event) => setFrequency(event.target.value)}
                 variant='outlined'
                 size='small'
@@ -129,7 +129,7 @@ const MedForm = (props) => {
                   margin='normal'
                   id='time-picker'
                   label='Set time of dose'
-                  value={selectedTime}
+                  value={props.selectedTime}
                   onChange={(time) => setselectedTime(time)}
                   KeyboardButtonProps={{
                     'aria-label': 'change time',
@@ -145,7 +145,7 @@ const MedForm = (props) => {
                   format='dd/MM/yyyy'
                   margin='normal'
                   label='Start date'
-                  value={selectedStartDate}
+                  value={props.selectedStartDate}
                   onChange={(date) => setselectedStartDate(date)}
                   KeyboardButtonProps={{
                     'aria-label': 'change date',
@@ -157,7 +157,7 @@ const MedForm = (props) => {
                   format='dd/MM/yyyy'
                   margin='normal'
                   label='End date (OPTIONAL)'
-                  value={selectedEndDate}
+                  value={props.selectedEndDate}
                   onChange={(date) => setSelectedEndDate(date)}
                   KeyboardButtonProps={{
                     'aria-label': 'change date',
@@ -166,8 +166,8 @@ const MedForm = (props) => {
               </MuiPickersUtilsProvider>
             </div>
             <Button className={classes.addButton} onClick={handleSubmit} variant="contained" color="primary">
-              Add
-              </Button>
+              {props.action}
+            </Button>
           </FormControl>
         </div>
       </Fade>
