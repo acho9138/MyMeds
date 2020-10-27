@@ -40,6 +40,8 @@ const Home = (props) => {
         open={open}
         onClose={() => setOpen(false)}
         in={open}
+        action={'Add'}
+        title={'Add a Medication'}
       />
     </>
   )
