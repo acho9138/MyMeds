@@ -8,6 +8,9 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import moment from 'moment';
 
+// Components
+import { MedForm } from '../../../../components'
+
 // utils
 import API from '../../../../utils/API';
 
@@ -23,7 +26,10 @@ class Calendar extends Component {
     this.state = {
       viewModel: schedulerData,
       resources: [],
-      events: []
+      events: [],
+      userMeds: [],
+      medToEdit: {},
+      open: false
     }
   }
 
@@ -98,9 +104,11 @@ class Calendar extends Component {
         this.setState({
           viewModel: schedulerData,
           resources: this.getResources(res.data),
-          events: this.getEvents(res.data)
+          events: this.getEvents(res.data),
+          userMeds: res.data
         })
-      }).catch((error) => {
+      })
+      .catch((error) => {
         console.error(error)
       })
   }
@@ -138,11 +146,27 @@ class Calendar extends Component {
   }
 
   eventClicked = (schedulerData, event) => {
-    alert(`You just clicked an event: {id: ${event.id}, title: ${event.title}}`);
+    this.setState({
+      open: true
+    });
   }
 
   edit = (schedulerData, event) => {
-    // console.log(event.id);
+    const id = event.id;
+    const userMedArr = this.state.userMeds;
+
+    this.setState({
+      open: true,
+      medToEdit: userMedArr.filter(item => item._id === id.toString().slice(0, -2))
+    }, () => {
+      console.log(this.state.medToEdit);
+    })
+
+
+    // API.editMed(id.toString().slice(0, -2), this.state.medToEdit)
+    //   .then(() => {
+    //     window.location.reload();
+    //   })
   };
 
   delete = (schedulerData, event) => {
@@ -156,18 +180,32 @@ class Calendar extends Component {
 
   render() {
     return (
-      <Scheduler
-        schedulerData={this.state.viewModel}
-        prevClick={this.prevClick}
-        nextClick={this.nextClick}
-        onSelectDate={this.onSelectDate}
-        onViewChange={this.onViewChange}
-        eventItemClick={this.eventClicked}
-        viewEventClick={this.edit}
-        viewEventText="EDIT"
-        viewEvent2Text="DELETE"
-        viewEvent2Click={this.delete}
-      />
+      <>
+        <Scheduler
+          schedulerData={this.state.viewModel}
+          prevClick={this.prevClick}
+          nextClick={this.nextClick}
+          onSelectDate={this.onSelectDate}
+          onViewChange={this.onViewChange}
+          eventItemClick={this.eventClicked}
+          viewEventClick={this.edit}
+          viewEventText="EDIT"
+          viewEvent2Text="DELETE"
+          viewEvent2Click={this.delete}
+        />
+        <MedForm
+          open={this.state.open}
+          onClose={() => (this.setState({ open: false }))}
+          in={this.state.open}
+          action={'Update'}
+          name={this.state.medToEdit.name}
+          strength={this.state.medToEdit.strength}
+          freqency={this.state.medToEdit.freqency}
+          selectedTime={this.state.medToEdit.time}
+          selectedStartDate={this.state.medToEdit.start}
+          title={'Edit Medication'}
+        />
+      </>
     )
   }
 }
