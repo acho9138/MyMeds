@@ -1,5 +1,5 @@
 // React libraries
-import React, { useState } from 'react';
+import React from 'react';
 
 // Material UI libraries
 import { Modal, Fade, Backdrop, Typography, TextField, MenuItem, Button, FormControl } from '@material-ui/core';
@@ -14,9 +14,6 @@ import {
 
 // Styles
 import { styles } from './MedForm.style';
-
-// utils
-import API from '../../utils/API';
 
 const frequencies = [
   {
@@ -36,30 +33,6 @@ const frequencies = [
 // Component
 const MedForm = (props) => {
   const classes = styles();
-  const [name, setName] = useState('');
-  const [strength, setStrength] = useState('');
-  const [frequency, setFrequency] = useState('');
-  const [selectedTime, setselectedTime] = useState(new Date());
-  const [selectedStartDate, setselectedStartDate] = useState(new Date());
-  const [selectedEndDate, setSelectedEndDate] = useState(null);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    API.addMed({
-      userId: localStorage.getItem('userId'),
-      name: name,
-      strength: strength,
-      frequency: frequency,
-      time: selectedTime,
-      startDate: selectedStartDate,
-      endDate: selectedEndDate
-    }).then(() => {
-      console.log('Successfully added new medication');
-      window.location.reload();
-    }).catch((error) => {
-      console.error(error);
-    })
-  }
 
   return (
     <Modal
@@ -85,25 +58,28 @@ const MedForm = (props) => {
                 label='Medication name'
                 variant='outlined'
                 size='small'
+                helperText={props.helperTextName}
+                onChange={props.onChangeName}
                 value={props.name}
-                onChange={(e) => setName(e.target.value)}
               />
               <TextField
                 label='Strength'
                 variant='outlined'
                 size='small'
+                helperText={props.helperTextStrength}
+                onChange={props.onChangeStrength}
                 value={props.strength}
-                onChange={(e) => setStrength(e.target.value)}
               />
             </div>
             <div>
               <TextField
                 select
                 label='Select frequency'
-                value={props.frequency}
-                onChange={(event) => setFrequency(event.target.value)}
+                helperText={props.helperTextFrequency}
+                onChange={props.onChangeFrequency}
                 variant='outlined'
                 size='small'
+                value={props.frequency}
               >
                 {frequencies.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
@@ -117,11 +93,12 @@ const MedForm = (props) => {
                   margin='normal'
                   id='time-picker'
                   label='Set time of dose'
-                  value={props.selectedTime}
-                  onChange={(time) => setselectedTime(time)}
+                  helperText={props.helperTextTime}
+                  onChange={props.onChangeTime}
                   KeyboardButtonProps={{
                     'aria-label': 'change time',
                   }}
+                  value={props.time}
                 />
               </MuiPickersUtilsProvider>
             </div>
@@ -133,8 +110,9 @@ const MedForm = (props) => {
                   format='dd/MM/yyyy'
                   margin='normal'
                   label='Start date'
-                  value={selectedStartDate}
-                  onChange={(date) => setselectedStartDate(date)}
+                  helperText={props.helperTextStartDate}
+                  onChange={props.onChangeStartDate}
+                  value={props.startDate}
                   KeyboardButtonProps={{
                     'aria-label': 'change date',
                   }}
@@ -145,15 +123,16 @@ const MedForm = (props) => {
                   format='dd/MM/yyyy'
                   margin='normal'
                   label='End date (OPTIONAL)'
-                  value={selectedEndDate}
-                  onChange={(date) => setSelectedEndDate(date)}
+                  helperText={props.helperTextEndDate}
+                  onChange={props.onChangeEndDate}
+                  value={props.endDate}
                   KeyboardButtonProps={{
                     'aria-label': 'change date',
                   }}
                 />
               </MuiPickersUtilsProvider>
             </div>
-            <Button className={classes.addButton} onClick={handleSubmit} variant="contained" color="primary">
+            <Button className={classes.addButton} onClick={props.onClick} variant="contained" color="primary">
               {props.action}
             </Button>
           </FormControl>
