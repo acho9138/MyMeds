@@ -6,7 +6,7 @@ import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import { Login, Signup, Home } from './pages';
 
 // Components
-import { Navbar } from './components';
+import { Navbar, Footer } from './components';
 
 const App = () => {
 
@@ -21,6 +21,7 @@ const App = () => {
           <PrivateRoute isLoggedIn={isLoggedIn} exact path='/home'><Home /></PrivateRoute>
           <Route path="*"><h1>404: Page Not Found</h1></Route>
         </Switch>
+        <Footer />
       </Router>
     </>
   );
