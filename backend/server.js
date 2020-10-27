@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const session = require('express-session');
+// const cron = require('node-cron');
 const LocalStrategy = require('passport-local').Strategy;
 
 // Models
@@ -14,6 +15,9 @@ const routes = require('./routes');
 // Environment variables
 require('dotenv').config();
 const PORT = process.env.PORT || 3001;
+
+// CronJob
+// const Reminder = require('./cron/reminder')
 
 // App setup
 const app = express();
@@ -45,7 +49,7 @@ app.use(routes);
 
 // Connect to the Mongo DB
 mongoose.connect(
-  process.env.MONGODB_URI || 'mongodb://localhost/mymeds',
+  process.env.MONGODB_URI || `mongodb+srv://acho9138:${process.env.MONGODB_PASSWORD}@cluster0.qzppp.mongodb.net/MyMedsDB?retryWrites=true&w=majority`,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -54,15 +58,14 @@ mongoose.connect(
   },
 );
 
+// Cron for sending emails
+// cron.schedule('* * * * *', function () {
+//   Reminder.medReminder()
+// });
+
+
 // Start the API server
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
 });
-
-
-// const { google } = require('googleapis');
-// const { oAuth2 } = google.auth;
-// const oAuth2Client = new OAuth2(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET);
-
-// oAuth2Client.setCredentials({ refresh_token: GOOGLE_REFRESH_TOKEN });
