@@ -29,6 +29,14 @@ class Calendar extends Component {
       events: [],
       userMeds: [],
       medToEdit: {},
+      updatedMed: {
+        name: '',
+        strength: '',
+        time: new Date(),
+        frequency: '',
+        endDate: null,
+        startDate: new Date(),
+      },
       open: false
     }
   }
@@ -50,13 +58,12 @@ class Calendar extends Component {
 
     for (let i = 0; i < data.length; i++) {
       const med = data[i];
-      const time = moment(med.startDate).format('h:mm A');
+      const time = moment(med.time).format('h:mm A');
       const recurringDay = moment(med.startDate).format('dd').toUpperCase();
       const recurringDate = moment(med.startDate).format('D');
       const recurringStartDay = med.startDate.replaceAll('-', '').replaceAll(':', '').replaceAll('.', '').slice(0, -4);
 
       if (med.frequency === 'ONCE daily') {
-        console.log(med)
         events.push({
           id: med._id,
           start: moment(med.startDate).format('YYYY-MM-DD hh:mm:ss'),
@@ -147,16 +154,22 @@ class Calendar extends Component {
   }
 
   eventClicked = (schedulerData, event) => {
-    this.setState({
-      open: true
-    });
-  }
-
-  edit = async (schedulerData, event) => {
     const id = event.id;
     const userMedArr = this.state.userMeds;
 
-    const setMedState = await this.setState({
+    this.setState({
+      open: true,
+      medToEdit: userMedArr.filter(item => item._id === id.toString().slice(0, -2))[0]
+    }, () => {
+      console.log(this.state.medToEdit);
+    })
+  }
+
+  edit = (schedulerData, event) => {
+    const id = event.id;
+    const userMedArr = this.state.userMeds;
+
+    this.setState({
       open: true,
       medToEdit: userMedArr.filter(item => item._id === id.toString().slice(0, -2))[0]
     }, () => {
@@ -165,17 +178,22 @@ class Calendar extends Component {
   };
 
   handleSubmit = () => {
+    this.setState({
+
+    })
     API.editMed(this.state.medToEdit._id, this.state.medToEdit)
       .then(() => {
-        console.log("EDITED");
         window.location.reload();
       })
   }
 
-  handleChange = () => {
+  handleOnChange = (value, field) => {
+    console.log(value)
     this.setState({
-      medToEdit: [],
-    })
+      updatedMed: {
+        [field]: value
+      }
+    });
   }
 
   delete = (schedulerData, event) => {
@@ -207,14 +225,26 @@ class Calendar extends Component {
           onClose={() => (this.setState({ open: false }))}
           in={this.state.open}
           action={'Update'}
-          name={this.state.medToEdit.name}
-          strength={this.state.medToEdit.strength}
-          freqency={this.state.medToEdit.freqency}
-          selectedTime={this.state.medToEdit.time}
-          selectedStartDate={this.state.medToEdit.start}
           title={'Edit Medication'}
           onClick={this.handleSubmit}
-          onChange={this.handleChange}
+          helperTextName={`Currently: ${this.state.medToEdit.name}`}
+          helperTextStrength={`Currently: ${this.state.medToEdit.strength}`}
+          helperTextFrequency={`Currently: ${this.state.medToEdit.frequency}`}
+          helperTextTime={`Currently: ${moment(this.state.medToEdit.time).format('hh:mm A')}`}
+          helperTextStartDate={`Currently: ${moment(this.state.medToEdit.startDate).format('DD/MM/YYYY')}`}
+          helperTextEndDate={`Currently: ${this.state.medToEdit.endDate ? moment(this.state.medToEdit.endDate).format('DD/MM/YYYY') : 'Not set'}`}
+          onChangeName={(val) => this.handleOnChange(val, "name")}
+          onChangeStrength={(val) => this.handleOnChange(val, "strength")}
+          onChangeFrequency={(val) => this.handleOnChange(val, "frequency")}
+          onChangeTime={(val) => this.handleOnChange(val, "time")}
+          onChangeStartDate={(val) => this.handleOnChange(val, "startDate")}
+          onChangeEndDate={(val) => this.handleOnChange(val, "endDate")}
+          name={this.state.updatedMed.name}
+          strength={this.state.updatedMed.strength}
+          time={this.state.updatedMed.time}
+          frequency={this.state.updatedMed.frequency}
+          endDate={this.state.updatedMed.endDate}
+          startDate={this.state.updatedMed.startDate}
         />
       </>
     )
