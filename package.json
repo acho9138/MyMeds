@@ -2,15 +2,16 @@
   "name": "mymeds",
   "version": "1.0.0",
   "description": "",
-  "main": "./backend/server.js",
+  "main": "./server.js",
+  "proxy": "http://localhost:3001/",
   "scripts": {
-    "start:broken": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
-    "start": "node backend/server.js",
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:broken": "node server.js",
     "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
     "client": "cd client && npm run start",
     "install": "cd client && npm install",
     "build": "cd client && npm run build",
-    "heroku-postbuild": "cd backend && npm run build"
+    "heroku-postbuild": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -24,11 +25,29 @@
   "homepage": "https://github.com/acho9138/MyMeds#readme",
   "devDependencies": {
     "concurrently": "^4.1.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.21.4",
+    "eslint-plugin-react-hooks": "^4.1.2",
     "nodemon": "^1.19.4"
   },
   "dependencies": {
     "moment": "^2.29.1",
     "react-dnd": "^11.1.3",
-    "react-dnd-html5-backend": "^11.1.3"
+    "react-dnd-html5-backend": "^11.1.3",
+    "axios": "^0.20.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "if-env": "^1.0.4",
+    "mongodb": "^3.6.2",
+    "mongoose": "^5.10.9",
+    "node-cron": "^2.0.3",
+    "nodemailer": "^6.4.14",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^6.0.1"
   }
 }

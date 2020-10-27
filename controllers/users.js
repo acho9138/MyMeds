@@ -4,6 +4,7 @@ const UserDB = require('../models/user');
 // Controller
 module.exports = {
   login: function (req, res) {
+    console.log(req.body)
     UserDB.findOne({
       username: req.body.username
     }, (err, person) => {
