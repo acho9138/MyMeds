@@ -63,6 +63,9 @@ mongoose.connect(
 //   Reminder.medReminder()
 // });
 
+app.get('*', res => {
+  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+});
 
 // Start the API server
 app.listen(PORT, () => {
