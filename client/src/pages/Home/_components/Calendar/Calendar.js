@@ -55,7 +55,8 @@ class Calendar extends Component {
       const recurringDate = moment(med.startDate).format('D');
       const recurringStartDay = med.startDate.replaceAll('-', '').replaceAll(':', '').replaceAll('.', '').slice(0, -4);
 
-      if (med.frequency === '1xdaily') {
+      if (med.frequency === 'ONCE daily') {
+        console.log(med)
         events.push({
           id: med._id,
           start: moment(med.startDate).format('YYYY-MM-DD hh:mm:ss'),
@@ -66,7 +67,7 @@ class Calendar extends Component {
           title: `${med.name} ${time}`,
           rrule: `FREQ=DAILY;DTSTART=${recurringStartDay};BYDAY=MO,TU,WE,TH,FR,SA,SU`,
         })
-      } else if (med.frequency === '1xmonthly') {
+      } else if (med.frequency === 'ONCE a MONTH') {
         events.push({
           id: med._id,
           start: moment(med.startDate).format('YYYY-MM-DD hh:mm:ss'),
@@ -77,7 +78,7 @@ class Calendar extends Component {
           title: `${med.name} ${time}`,
           rrule: `FREQ=MONTHLY;DTSTART=${recurringStartDay};BYMONTHDAY=${recurringDate}`,
         })
-      } else if (med.frequency === '1xweekly') {
+      } else if (med.frequency === 'ONCE a WEEK') {
         events.push({
           id: med._id,
           start: moment(med.startDate).format('YYYY-MM-DD hh:mm:ss'),
@@ -151,23 +152,31 @@ class Calendar extends Component {
     });
   }
 
-  edit = (schedulerData, event) => {
+  edit = async (schedulerData, event) => {
     const id = event.id;
     const userMedArr = this.state.userMeds;
 
-    this.setState({
+    const setMedState = await this.setState({
       open: true,
-      medToEdit: userMedArr.filter(item => item._id === id.toString().slice(0, -2))
+      medToEdit: userMedArr.filter(item => item._id === id.toString().slice(0, -2))[0]
     }, () => {
       console.log(this.state.medToEdit);
     })
-
-
-    // API.editMed(id.toString().slice(0, -2), this.state.medToEdit)
-    //   .then(() => {
-    //     window.location.reload();
-    //   })
   };
+
+  handleSubmit = () => {
+    API.editMed(this.state.medToEdit._id, this.state.medToEdit)
+      .then(() => {
+        console.log("EDITED");
+        window.location.reload();
+      })
+  }
+
+  handleChange = () => {
+    this.setState({
+      medToEdit: [],
+    })
+  }
 
   delete = (schedulerData, event) => {
     const id = event.id;
@@ -204,6 +213,8 @@ class Calendar extends Component {
           selectedTime={this.state.medToEdit.time}
           selectedStartDate={this.state.medToEdit.start}
           title={'Edit Medication'}
+          onClick={this.handleSubmit}
+          onChange={this.handleChange}
         />
       </>
     )
