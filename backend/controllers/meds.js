@@ -9,8 +9,13 @@ module.exports = {
       .catch(err => res.status(422).json(err))
   },
   edit: (req, res) => {
-    MedDB.findOneAndUpdate({ _id: req.params.id }, req.body)
-      .then(dbModel => res.json(dbModel))
+    console.log(req.body)
+    console.log(req.params.id)
+    MedDB.findOneAndUpdate({ _id: req.params.id }, req.body, { upsert: true })
+      .then(dbModel => {
+        console.log(dbModel)
+        res.json(dbModel)
+      })
       .catch(err => res.status(422).json(err));
   },
   delete: (req, res) => {
