@@ -4,17 +4,21 @@ const UserDB = require('../models/user');
 // Controller
 module.exports = {
   login: function (req, res) {
-    console.log(req.body)
     UserDB.findOne({
       username: req.body.username
     }, (err, person) => {
-      res.statusCode = 200;
-      res.setHeader('Content-Type', 'application/json');
-      res.json({
-        success: true,
-        status: 'You are successfully logged in!',
-        userId: person.id,
-      });
+      if (err) {
+        console.log(err);
+      } else {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json({
+          success: true,
+          status: 'You are successfully logged in!',
+          userId: person.id,
+        });
+      }
+
     })
   },
   logout: function (req, res, next) {
@@ -37,7 +41,6 @@ module.exports = {
     }
   },
   signup: function (req, res, next) {
-    console.log(req.body.username)
     UserDB.register(new UserDB({
       username: req.body.username
     }),
