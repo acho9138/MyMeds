@@ -58,7 +58,7 @@ const MedForm = (props) => {
                 label='Medication name'
                 variant='outlined'
                 size='small'
-                helperText={props.helperTextName}
+                name='name'
                 onChange={props.onChangeName}
                 value={props.name}
               />
@@ -66,7 +66,7 @@ const MedForm = (props) => {
                 label='Strength'
                 variant='outlined'
                 size='small'
-                helperText={props.helperTextStrength}
+                name='strength'
                 onChange={props.onChangeStrength}
                 value={props.strength}
               />
@@ -75,7 +75,7 @@ const MedForm = (props) => {
               <TextField
                 select
                 label='Select frequency'
-                helperText={props.helperTextFrequency}
+                name='frequency'
                 onChange={props.onChangeFrequency}
                 variant='outlined'
                 size='small'
@@ -93,7 +93,7 @@ const MedForm = (props) => {
                   margin='normal'
                   id='time-picker'
                   label='Set time of dose'
-                  helperText={props.helperTextTime}
+                  name='time'
                   onChange={props.onChangeTime}
                   KeyboardButtonProps={{
                     'aria-label': 'change time',
@@ -110,7 +110,7 @@ const MedForm = (props) => {
                   format='dd/MM/yyyy'
                   margin='normal'
                   label='Start date'
-                  helperText={props.helperTextStartDate}
+                  name='startDate'
                   onChange={props.onChangeStartDate}
                   value={props.startDate}
                   KeyboardButtonProps={{
@@ -123,7 +123,7 @@ const MedForm = (props) => {
                   format='dd/MM/yyyy'
                   margin='normal'
                   label='End date (OPTIONAL)'
-                  helperText={props.helperTextEndDate}
+                  name='endDate'
                   onChange={props.onChangeEndDate}
                   value={props.endDate}
                   KeyboardButtonProps={{
