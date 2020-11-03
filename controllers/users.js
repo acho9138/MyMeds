@@ -46,8 +46,6 @@ module.exports = {
     }),
       req.body.password, (err, user) => {
         if (err) {
-          console.log(err.message)
-          console.log("ERROR")
           res.statusCode = 500;
           res.setHeader('Content-Type', 'application/json');
           res.json({
@@ -57,6 +55,7 @@ module.exports = {
           res.statusCode = 200;
           res.setHeader('Content-Type', 'application/json');
           res.json({
+            userId: user._id,
             success: true,
             message: 'Registration Successful!',
           });

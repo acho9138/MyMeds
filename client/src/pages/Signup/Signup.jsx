@@ -26,6 +26,7 @@ const Signup = ({ setIsLoggedIn }) => {
       username: email,
       password: password,
     }).then((res) => {
+      console.log(res);
       setIsLoggedIn(true)
       history.push('/home');
       localStorage.setItem('userId', res.data.userId);
