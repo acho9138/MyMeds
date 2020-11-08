@@ -19,7 +19,6 @@ class Calendar extends Component {
   constructor(props) {
     super(props);
 
-    //let schedulerData = new SchedulerData(new moment("2017-12-18").format(DATE_FORMAT), ViewTypes.Week);
     let schedulerData = new SchedulerData(moment().format('YYYY-MM-DD'), ViewTypes.Week);
     schedulerData.localeMoment.locale('en');
 
@@ -28,17 +27,9 @@ class Calendar extends Component {
       resources: [],
       events: [],
       userMeds: [],
-      medToEdit: {},
-      updatedMed: {
-        name: '',
-        strength: '',
-        time: new Date(),
-        frequency: '',
-        endDate: null,
-        startDate: new Date(),
-      },
+      updatedMed: {},
       open: false
-    }
+    };
   }
 
   getResources(data) {
@@ -59,6 +50,7 @@ class Calendar extends Component {
     for (let i = 0; i < data.length; i++) {
       const med = data[i];
       const time = moment(med.time).format('h:mm A');
+      const startTime = moment(med.startDate).format('YYYY-MM-DD hh:mm:ss');
       const recurringDay = moment(med.startDate).format('dd').toUpperCase();
       const recurringDate = moment(med.startDate).format('D');
       const recurringStartDay = med.startDate.replaceAll('-', '').replaceAll(':', '').replaceAll('.', '').slice(0, -4);
@@ -66,38 +58,39 @@ class Calendar extends Component {
       if (med.frequency === 'ONCE daily') {
         events.push({
           id: med._id,
-          start: moment(med.startDate).format('YYYY-MM-DD hh:mm:ss'),
+          start: startTime,
           end: moment(med.startDate).add(5, 'minutes').format('YYYY-MM-DD hh:mm:ss'),
           resourceId: med.name,
           movable: false,
           bgColor: colors[i],
-          title: `${med.name} ${time}`,
+          title: time,
           rrule: `FREQ=DAILY;DTSTART=${recurringStartDay};BYDAY=MO,TU,WE,TH,FR,SA,SU`,
         })
+        console.log(`START ${moment(med.startDate).format('YYYY-MM-DD hh:mm:ss')}`);
+        console.log(events);
       } else if (med.frequency === 'ONCE a MONTH') {
         events.push({
           id: med._id,
-          start: moment(med.startDate).format('YYYY-MM-DD hh:mm:ss'),
+          start: startTime,
           end: moment(med.startDate).add(5, 'minutes').format('YYYY-MM-DD hh:mm:ss'),
           resourceId: med.name,
           movable: false,
           bgColor: colors[i],
-          title: `${med.name} ${time}`,
+          title: time,
           rrule: `FREQ=MONTHLY;DTSTART=${recurringStartDay};BYMONTHDAY=${recurringDate}`,
         })
       } else if (med.frequency === 'ONCE a WEEK') {
         events.push({
           id: med._id,
-          start: moment(med.startDate).format('YYYY-MM-DD hh:mm:ss'),
+          start: startTime,
           end: moment(med.startDate).add(5, 'minutes').format('YYYY-MM-DD hh:mm:ss'),
           resourceId: med.name,
           movable: false,
           bgColor: colors[i],
-          title: `${med.name} ${time}`,
+          title: time,
           rrule: `FREQ=WEEKLY;DTSTART=${recurringStartDay};BYDAY=${recurringDay}`,
         })
       }
-
     }
     return events;
   }
@@ -114,7 +107,7 @@ class Calendar extends Component {
           resources: this.getResources(res.data),
           events: this.getEvents(res.data),
           userMeds: res.data
-        })
+        });
       })
       .catch((error) => {
         console.error(error)
@@ -153,48 +146,31 @@ class Calendar extends Component {
     })
   }
 
-  eventClicked = (schedulerData, event) => {
-    const id = event.id;
+  onEditPress = (schedulerData, event) => {
+    const id = event.id.split('-')[0];
     const userMedArr = this.state.userMeds;
 
     this.setState({
       open: true,
-      medToEdit: userMedArr.filter(item => item._id === id.toString().slice(0, -2))[0]
-    }, () => {
-      console.log(this.state.medToEdit);
-    })
-  }
-
-  edit = (schedulerData, event) => {
-    const id = event.id;
-    const userMedArr = this.state.userMeds;
-
-    this.setState({
-      open: true,
-      medToEdit: userMedArr.filter(item => item._id === id.toString().slice(0, -2))[0]
-    }, () => {
-      console.log(this.state.medToEdit);
+      updatedMed: userMedArr.filter(item => item._id === id.toString())[0]
     })
   };
 
   handleSubmit = () => {
-    this.setState({
-
-    })
-    API.editMed(this.state.medToEdit._id, this.state.medToEdit)
+    API.editMed(this.state.updatedMed._id, this.state.updatedMed)
       .then(() => {
         window.location.reload();
       })
-  }
+  };
 
-  handleOnChange = (value, field) => {
-    console.log(value)
+  handleOnChange = (key, value) => {
     this.setState({
       updatedMed: {
-        [field]: value
+        ...this.state.updatedMed,
+        [key]: value
       }
-    });
-  }
+    })
+  };
 
   delete = (schedulerData, event) => {
     const id = event.id;
@@ -214,10 +190,10 @@ class Calendar extends Component {
           nextClick={this.nextClick}
           onSelectDate={this.onSelectDate}
           onViewChange={this.onViewChange}
-          eventItemClick={this.eventClicked}
-          viewEventClick={this.edit}
-          viewEventText="EDIT"
-          viewEvent2Text="DELETE"
+          eventItemClick={this.onEditPress}
+          viewEventClick={this.onEditPress}
+          viewEventText='EDIT'
+          viewEvent2Text='DELETE'
           viewEvent2Click={this.delete}
         />
         <MedForm
@@ -227,18 +203,12 @@ class Calendar extends Component {
           action={'Update'}
           title={'Edit Medication'}
           onClick={this.handleSubmit}
-          helperTextName={`Currently: ${this.state.medToEdit.name}`}
-          helperTextStrength={`Currently: ${this.state.medToEdit.strength}`}
-          helperTextFrequency={`Currently: ${this.state.medToEdit.frequency}`}
-          helperTextTime={`Currently: ${moment(this.state.medToEdit.time).format('hh:mm A')}`}
-          helperTextStartDate={`Currently: ${moment(this.state.medToEdit.startDate).format('DD/MM/YYYY')}`}
-          helperTextEndDate={`Currently: ${this.state.medToEdit.endDate ? moment(this.state.medToEdit.endDate).format('DD/MM/YYYY') : 'Not set'}`}
-          onChangeName={(val) => this.handleOnChange(val, "name")}
-          onChangeStrength={(val) => this.handleOnChange(val, "strength")}
-          onChangeFrequency={(val) => this.handleOnChange(val, "frequency")}
-          onChangeTime={(val) => this.handleOnChange(val, "time")}
-          onChangeStartDate={(val) => this.handleOnChange(val, "startDate")}
-          onChangeEndDate={(val) => this.handleOnChange(val, "endDate")}
+          onChangeName={(val) => this.handleOnChange(val.target.name, val.target.value)}
+          onChangeStrength={(val) => this.handleOnChange(val.target.name, val.target.value)}
+          onChangeFrequency={(val) => this.handleOnChange(val.target.name, val.target.value)}
+          onChangeTime={(val) => this.handleOnChange("time", val)}
+          onChangeStartDate={(val) => this.handleOnChange("startDate", val)}
+          onChangeEndDate={(val) => this.handleOnChange("endDate", val)}
           name={this.state.updatedMed.name}
           strength={this.state.updatedMed.strength}
           time={this.state.updatedMed.time}

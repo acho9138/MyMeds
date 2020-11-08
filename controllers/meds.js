@@ -11,7 +11,7 @@ module.exports = {
   edit: (req, res) => {
     console.log(req.body)
     console.log(req.params.id)
-    MedDB.findOneAndUpdate({ _id: req.params.id }, req.body, { upsert: true })
+    MedDB.findOneAndUpdate({ _id: req.params.id }, req.body)
       .then(dbModel => {
         console.log(dbModel)
         res.json(dbModel)
