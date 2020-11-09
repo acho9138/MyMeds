@@ -3,14 +3,14 @@ import React, { useState } from 'react';
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 // Pages
-import { Login, Signup, Home } from './pages';
+import { Login, Signup, Home, Summary } from './pages';
 
 // Components
 import { Navbar, Footer } from './components';
 
 const App = () => {
-
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('userId') ? true : false);
+
   return (
     <>
       <Router basename='/'>
@@ -19,6 +19,7 @@ const App = () => {
           <NormalRoute isLoggedIn={isLoggedIn} exact path='/login'><Login setIsLoggedIn={setIsLoggedIn} /></NormalRoute>
           <NormalRoute isLoggedIn={isLoggedIn} exact path='/signup'><Signup setIsLoggedIn={setIsLoggedIn} /></NormalRoute>
           <PrivateRoute isLoggedIn={isLoggedIn} exact path='/home'><Home /></PrivateRoute>
+          <PrivateRoute isLoggedIn={isLoggedIn} exact path='/summary'><Summary /></PrivateRoute>
           <Route path="*"><h1>404: Page Not Found</h1></Route>
         </Switch>
         <Footer />
