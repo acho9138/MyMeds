@@ -6,6 +6,8 @@ import Scheduler, { SchedulerData, ViewTypes } from 'react-big-scheduler';
 import 'react-big-scheduler/lib/css/style.css';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+
+// NPM package
 import moment from 'moment';
 
 // Components
@@ -49,8 +51,8 @@ class Calendar extends Component {
 
     for (let i = 0; i < data.length; i++) {
       const med = data[i];
-      const time = moment(med.time).format('h:mm A');
-      const startTime = moment(med.startDate).format('YYYY-MM-DD hh:mm:ss');
+      const time = moment(med.time).format('HH:mm A');
+      const startTime = moment(med.startDate).format('YYYY-MM-DD HH:mm:ss');
       const recurringDay = moment(med.startDate).format('dd').toUpperCase();
       const recurringDate = moment(med.startDate).format('D');
       const recurringStartDay = med.startDate.replaceAll('-', '').replaceAll(':', '').replaceAll('.', '').slice(0, -4);
@@ -59,20 +61,18 @@ class Calendar extends Component {
         events.push({
           id: med._id,
           start: startTime,
-          end: moment(med.startDate).add(5, 'minutes').format('YYYY-MM-DD hh:mm:ss'),
+          end: moment(med.startDate).add(5, 'minutes').format('YYYY-MM-DD HH:mm:ss'),
           resourceId: med.name,
           movable: false,
           bgColor: colors[i],
           title: time,
           rrule: `FREQ=DAILY;DTSTART=${recurringStartDay};BYDAY=MO,TU,WE,TH,FR,SA,SU`,
         })
-        console.log(`START ${moment(med.startDate).format('YYYY-MM-DD hh:mm:ss')}`);
-        console.log(events);
       } else if (med.frequency === 'ONCE a MONTH') {
         events.push({
           id: med._id,
           start: startTime,
-          end: moment(med.startDate).add(5, 'minutes').format('YYYY-MM-DD hh:mm:ss'),
+          end: moment(med.startDate).add(5, 'minutes').format('YYYY-MM-DD HH:mm:ss'),
           resourceId: med.name,
           movable: false,
           bgColor: colors[i],
@@ -83,7 +83,7 @@ class Calendar extends Component {
         events.push({
           id: med._id,
           start: startTime,
-          end: moment(med.startDate).add(5, 'minutes').format('YYYY-MM-DD hh:mm:ss'),
+          end: moment(med.startDate).add(5, 'minutes').format('YYYY-MM-DD HH:mm:ss'),
           resourceId: med.name,
           movable: false,
           bgColor: colors[i],
@@ -173,10 +173,11 @@ class Calendar extends Component {
   };
 
   delete = (schedulerData, event) => {
-    const id = event.id;
+    const id = event.id.toString().slice(0, -3);
 
-    API.deleteMed(id.toString().slice(0, -2))
+    API.deleteMed(id)
       .then(() => {
+        alert('Medication has been deleted');
         window.location.reload();
       })
   };
