@@ -4,11 +4,13 @@ import { useHistory } from 'react-router-dom';
 import { withRouter } from "react-router";
 
 // Material UI libraries
-import { AppBar, Toolbar, Button, IconButton } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+import { AppBar, Toolbar, Button } from '@material-ui/core';
 
 // Custom styles
 import { styles } from './Navbar.style';
+
+// Components
+import SideNav from '../SideNav'
 
 // utils
 import API from '../../utils/API';
@@ -35,9 +37,7 @@ const Navbar = (props) => {
     <div className={classes.root}>
       <AppBar position='static' className={classes.background}>
         <Toolbar>
-          <IconButton edge='start' className={classes.menuButton} color='inherit' aria-label='menu'>
-            <MenuIcon />
-          </IconButton>
+          <SideNav />
           <img className={classes.logo} src={process.env.PUBLIC_URL + '/assets/logo.png'} alt='logo' />
           <div className={classes.title}></div>
           <div>
