@@ -12,10 +12,7 @@ module.exports = {
     console.log(req.body)
     console.log(req.params.id)
     MedDB.findOneAndUpdate({ _id: req.params.id }, req.body)
-      .then(dbModel => {
-        console.log(dbModel)
-        res.json(dbModel)
-      })
+      .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   delete: (req, res) => {
@@ -24,7 +21,7 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   get: (req, res) => {
-    MedDB.find({ userId: req.params.userId })
+    MedDB.find({ userId: req.params.userId }).sort({ time: 1 })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err))
   },
