@@ -16,6 +16,7 @@ const App = () => {
       <Router basename='/'>
         <Navbar setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />
         <Switch>
+          <PrivateRoute isLoggedIn={isLoggedIn} exact path='/'><Home /></PrivateRoute>
           <NormalRoute isLoggedIn={isLoggedIn} exact path='/login'><Login setIsLoggedIn={setIsLoggedIn} /></NormalRoute>
           <NormalRoute isLoggedIn={isLoggedIn} exact path='/signup'><Signup setIsLoggedIn={setIsLoggedIn} /></NormalRoute>
           <PrivateRoute isLoggedIn={isLoggedIn} exact path='/home'><Home /></PrivateRoute>
