@@ -8,5 +8,9 @@ export const styles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
-  }
+  },
+  drawerButton: {
+    border: 'none',
+    backgroundColor: 'transparent !important',
+  },
 }));
