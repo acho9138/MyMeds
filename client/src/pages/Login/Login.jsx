@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { Paper, Typography, Container, Grid, TextField, FormControl, Button } from '@material-ui/core';
 import EmailIcon from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
+import MuiAlert from '@material-ui/lab/Alert';
 
 // Custom styles
 import { styles } from './Login.style';
@@ -13,12 +14,20 @@ import { styles } from './Login.style';
 // utils
 import API from '../../utils/API';
 
+
+const Alert = (props) => {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+
+// Login component
 const Login = ({ setIsLoggedIn }) => {
   const classes = styles();
   const history = useHistory();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isUserDetailsCorrect, setIsUserDetailsCorrect] = useState(true);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,9 +38,10 @@ const Login = ({ setIsLoggedIn }) => {
       setIsLoggedIn(true)
       history.push('/home');
       localStorage.setItem('userId', res.data.userId);
-      console.log('Successfully logged in');
+      setIsUserDetailsCorrect(true);
     }).catch((error) => {
       console.error(error);
+      setIsUserDetailsCorrect(false);
     })
   };
 
@@ -59,6 +69,7 @@ const Login = ({ setIsLoggedIn }) => {
                         label='Email'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        error={!isUserDetailsCorrect}
                       />
                     </Grid>
                   </Grid>
@@ -73,6 +84,7 @@ const Login = ({ setIsLoggedIn }) => {
                         label='Password'
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        error={!isUserDetailsCorrect}
                       />
                     </Grid>
                   </Grid>
@@ -84,6 +96,8 @@ const Login = ({ setIsLoggedIn }) => {
             </Grid>
           </Grid>
         </Paper>
+        {isUserDetailsCorrect ? ''
+          : <Alert severity="error">Incorrect login details. Please try again.</Alert>}
       </Container>
     </>
   )
