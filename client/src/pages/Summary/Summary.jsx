@@ -53,7 +53,7 @@ const Summary = (props) => {
           Frequency: med.frequency,
           Time: moment(med.time).format('hh:mm A'),
           StartDate: moment(med.startDate).format('DD/MM/YYYY'),
-          EndDate: 'Not provided',
+          EndDate: '-',
         })
       }
 
