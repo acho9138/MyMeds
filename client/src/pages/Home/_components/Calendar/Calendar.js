@@ -173,7 +173,7 @@ class Calendar extends Component {
   };
 
   delete = (schedulerData, event) => {
-    const id = event.id.toString().slice(0, -3);
+    const id = event.id.toString().slice(0, -2);
 
     API.deleteMed(id)
       .then(() => {
