@@ -173,11 +173,10 @@ class Calendar extends Component {
   };
 
   delete = (schedulerData, event) => {
-    const id = event.id.toString().slice(0, -2);
+    const id = event.id.split('-')[0];
 
     API.deleteMed(id)
       .then(() => {
-        alert('Medication has been deleted');
         window.location.reload();
       })
   };
