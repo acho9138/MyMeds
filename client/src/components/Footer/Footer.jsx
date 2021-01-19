@@ -17,7 +17,7 @@ const Footer = () => {
         <Grid container spacing={3}>
           <Grid item xs={12} align='center'>
             <Typography variant='h6' gutterBottom>
-              &copy; MyMeds 2020
+              &copy; MyMeds 2021
             </Typography>
           </Grid>
         </Grid>
